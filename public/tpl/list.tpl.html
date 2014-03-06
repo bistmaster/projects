@@ -1,0 +1,29 @@
+<div class="panel panel-defaul">
+	<div class="panel-heading">Networks
+		<div class="btn-group pull-right">
+			<a href="create" class="btn btn-primary btn-xs">Create</a>
+		</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>UID</th>
+					<th>Host (Total)</th>
+					<th>Networks (Total)</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>	
+				<tr ng-repeat="network in networks">			
+					<td width="25%">{{network.uid}}</td>
+					<td width="25%">{{network.hostnames.length}}</td>
+					<td width="25%">{{network.networks.length}}</td>
+					<td align="right">
+						<a class="btn btn-primary btn-xs" href="read/{{network._id}}">View</a>
+					</td>	
+				</tr>			
+			</tbody>
+		</table>			
+	</div>
+</div>

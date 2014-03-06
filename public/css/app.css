@@ -1,0 +1,7 @@
+.content {
+	width:80%;
+	margin: 70px auto;
+}
+.form-horizontal .control-label {
+	text-align: right;
+}
