@@ -1,5 +1,46 @@
 Application.Controllers.controller('CreateNetworkCtrl', ['$scope', '$routeParams', '$location', 'NetworkFactory', function ($scope, $routeParams, $location, NetworkFactory) {
-	
+	$scope.networks = [];
+	$scope.hostnames = [];
+	$scope.saveNetwork = function (){
+		var data = {};
+		data.uid = $scope.network.uid;
+		data.networks = $scope.networks;
+		data.hostnames = $scope.hostnames;
+		NetworkFactory.create(data, function(response){
+			if(response.result){
+				$location.path('/');
+			}
+		});
+	};
+
+	$scope.addNetworkList = function () {
+		var network = {};
+		network.nid = $scope.networks.nid;
+		network.n_name = $scope.networks.n_name;
+		network.n_ip = $scope.networks.n_ip;
+		network.n_status = $scope.networks.n_status;
+		$scope.networks.push(network);
+		clearNetworkFields();
+	};
+
+	$scope.addHostname = function () {
+		var hostname = {};
+		hostname.hostname = $scope.hostnames.hostname;
+		hostname.block = $scope.hostnames.block;
+		$scope.hostnames.push(hostname);
+		clearHostnameFields();
+	};
+
+	var clearNetworkFields = function (){
+		$scope.networks.nid = "";
+		$scope.networks.n_name = "";
+		$scope.networks.n_ip = "";
+	};	
+
+	var clearHostnameFields = function (){
+		$scope.hostnames.hostname = "";
+	};	
+
 }]);
 
 Application.Controllers.controller('EditNetworkCtrl', ['$scope', '$routeParams', '$location', 'NetworkFactory', function ($scope, $routeParams, $location, NetworkFactory) {
