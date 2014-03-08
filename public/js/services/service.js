@@ -31,6 +31,35 @@ var NetworkFactory = function (Restangular, $location) {
         });
     };
 
+    NetworkFactory.updateOneNetwork = function (id, networkEdit, callback){
+        baseNetwork.one(id).customPUT(networkEdit, 'network').then(function(response){
+            return callback(response);
+        });
+    }; 
+
+    NetworkFactory.updateOneHostname = function (id, hostnameEdit, callback){
+        baseNetwork.one(id).customPUT(hostnameEdit, 'hostname').then(function(response){
+            return callback(response);
+        });
+    };  
+
+    NetworkFactory.deleteNetwork = function (id,  callback){
+        baseNetwork.one(id).customGET('delete').then(function(response){
+            return callback(response);
+        });
+    };
+
+    NetworkFactory.deleteNetworkOne = function (id, networkId, callback){
+        baseNetwork.one(id).customGET(networkId + '/networks/delete').then(function(response){
+            return callback(response);
+        });
+    };
+
+    NetworkFactory.deleteHostnameOne = function (id, hostnameId, callback){
+        baseNetwork.one(id).customGET(hostnameId + '/hostnames/delete').then(function(response){
+            return callback(response);
+        });
+    };    
     return NetworkFactory;
 };
 

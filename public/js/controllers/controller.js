@@ -31,6 +31,13 @@ Application.Controllers.controller('CreateNetworkCtrl', ['$scope', '$routeParams
 		clearHostnameFields();
 	};
 
+	$scope.deleteNetworkOne = function($index) {
+		$scope.networks.splice($index, 1);
+	};
+
+	$scope.deleteHostnameOne = function($index) {
+		$scope.hostnames.splice($index, 1);
+	};
 	var clearNetworkFields = function (){
 		$scope.networks.nid = "";
 		$scope.networks.n_name = "";
@@ -85,12 +92,20 @@ Application.Controllers.controller('ReadNetworkCtrl', ['$scope', '$routeParams',
 		$scope.network.networks[$index].edit = false;
 	};
 
-	$scope.saveNetworkOne = function (id, $index){
-		console.log($scope.networkEdit);
+	$scope.updateNetworkOne = function (id, $index){
+ 		NetworkFactory.updateOneNetwork(id, $scope.networkEdit, function(response){
+ 			if(response.result && response.update) {
+ 				$scope.network.networks[$index].edit = false;
+ 			}
+ 		});	
 	};
 
-	$scope.saveHostOne = function (id, $index){
-		console.log($scope.hostnameEdit);
+	$scope.updateHostnameOne = function (id, $index){
+ 		NetworkFactory.updateOneHostname(id, $scope.hostnameEdit, function(response){
+ 			if(response.result && response.update) {
+ 				$scope.network.hostnames[$index].edit = false;
+ 			}
+ 		});		
 	};
 
 	$scope.addNetwork = function () {
@@ -103,6 +118,29 @@ Application.Controllers.controller('ReadNetworkCtrl', ['$scope', '$routeParams',
 		var hostnames = $scope.hostnameNew;
 		$scope.network.hostnames.push(hostnames);
 		clearHostnameFields();
+	};
+
+	$scope.deleteHostnameOne = function (id, $index) {
+		NetworkFactory.deleteHostnameOne($scope.id, id, function(response){
+			if(response.result && response.delete) {
+				$scope.network.hostnames.splice($index, 1);
+			}
+		});
+	};
+
+	$scope.deleteNetworkOne = function (id, $index) {
+		NetworkFactory.deleteNetworkOne($scope.id, id, function(response){
+			if(response.result) {
+				$scope.network.networks.splice($index, 1);
+			}
+		});
+	};	
+	$scope.deleteNetwork = function (id) {
+		NetworkFactory.deleteNetwork(id, function(response){
+			if(response.result && response.delete) {
+				$location.path('/');
+			}
+		});
 	};
 
 	var clearNetworkFields = function (){

@@ -71,55 +71,57 @@ var Network = function (mongoose) {
     self.delete = function(id, cb){
         Network.findByIdAndRemove(id, function(err){
             if(err instanceof Error){
+                console.log(err);
                 return cb(err);
             } else {
+                console.log('deleted');
                 return cb(true);
             }           
         });
     };
 
-    self.updateNetwork = function (networkId, network, cb){
-        Network.update({"networks:_id": networkId}, 
-            { $set :
-                {
-                    "networks.$.nid": network.nid,
-                    "networks.$.n_name": network.n_name,
-                    "networks.$.n_ip": network.n_ip,
-                    "networks.$.n_status": network.n_status
-                }
-            },
-            {},
-            function(err, affected, raw){
-                if(err) {
-                    return cb(err, null);
-                } else {
-                    return cb(null, affected);
-                }
-            });
+    self.updateNetwork = function (networkId, network, callback){
+        Network.update( { "networks._id":networkId }, 
+                        { 
+                            $set : {    
+                                "networks.$.nid": network.nid,
+                                "networks.$.n_name": network.n_name,
+                                "networks.$.n_ip": network.n_ip,
+                                "networks.$.n_status": network.n_status
+                            }
+                        }, 
+                        {}, 
+                        function(err, numberAffected, raw){
+                            if(err) { 
+                                return callback(err);
+                            } else {
+                                return callback(null, numberAffected);
+                            }                       
+                        } );
     };
 
-    self.updateHost= function (hostId, host, cb){
-          Network.update({"hostnames:_id": hostId}, 
-            { $set :
-                {
-                    "hostnames.$.hostname": host.hostname,
-                    "hostnames.$.block": host.block
-
-                }
-            },
-            {},
-            function(err, affected, raw){
-                if(err) {
-                    return cb(err, null);
-                } else {
-                    return cb(null, affected);
-                }
-            });      
+    self.updateHost= function (hostnameId, host, callback){
+        Network.update( { "hostnames._id": hostnameId }, 
+                        { 
+                            $set : {    
+                                "hostnames.$.hostname": host.hostname,
+                                "hostnames.$.block": host.block,
+                            }
+                        }, 
+                        {}, 
+                        function(err, numberAffected, raw){
+                            if(err) { 
+                                return callback(err);
+                            } else {
+                                return callback(null, numberAffected);
+                            }                       
+                        } );     
     };
 
-    self.deleteNetwork = function (id, networkId, cb){
+    self.deleteNetwork = function (id, networkId, callback){
         Network.update({_id: id}, {$pull : { "networks" : {_id: networkId}}}, function(err, numberAffected, raw) {
             if(err){
+                console.log(err);
                 return callback(err, false);
             } else {
                 return callback(null, numberAffected);
@@ -127,8 +129,8 @@ var Network = function (mongoose) {
         });        
     };
 
-    self.deleteHost = function (id, hostId, cb){
-        Network.update({_id: id}, {$pull : { "hostnames" : {_id: hostId}}}, function(err, numberAffected, raw) {
+    self.deleteHostname = function (id, hostnameId, callback){
+        Network.update({_id: id}, {$pull : { "hostnames" : {_id: hostnameId}}}, function(err, numberAffected, raw) {
             if(err){
                 return callback(err, false);
             } else {

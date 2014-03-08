@@ -2,7 +2,7 @@
 	<div class="panel-heading">Network
 		<div class="btn-group pull-right">
 			<a href="/" class="btn btn-primary btn-xs">Back</a>
-			<a href="delete/{{id}}" class="btn btn-primary btn-xs">Delete</a>
+			<a class="btn btn-primary btn-xs" ng-click="deleteNetwork(id)">Delete</a>
 		</div>
 	</div>
 	<div class="panel-body">
@@ -37,14 +37,15 @@
 									<td ng-hide="net.edit">{{net.n_ip}}</td>
 									<td ng-show="net.edit"><input type="text" class="form-control" name="name" id="name" placeholder="nid" ng-value="net.n_ip" ng-model="networkEdit.n_ip"/></td>
 									
-									<td><input type="checkbox" ng-checked="net.n_status" ng-model="networkEdit.n_status"></td>
+									<td ng-hide="net.edit"><input type="checkbox" ng-checked="net.n_status" ng-checked="net._status"></td>
+									<td ng-show="net.edit"><input type="checkbox" ng-checked="net.n_status" ng-model="networkEdit.n_status"></td>
 									<td align="right">
 										<div class="btn-group" ng-hide="net.edit">
 											<button class="btn btn-primary btn-xs" ng-click="editNetworkOne(net._id, $index)">Edit</button>
 											<button  class="btn btn-primary btn-xs" ng-click="deleteNetworkOne(net._id)">Delete</button>
 										</div>
 										<div class="btn-group" ng-show="net.edit">
-											<button class="btn btn-primary btn-xs" ng-click="saveNetworkOne(net._id, $index)">Save</button>
+											<button class="btn btn-primary btn-xs" ng-click="updateNetworkOne(net._id, $index)">Save</button>
 											<button class="btn btn-primary btn-xs" ng-click="cancelEditNetworkMode(net._id, $index)">Cancel</button>
 										</div>	
 									</td>									
@@ -92,7 +93,7 @@
 											<button  class="btn btn-primary btn-xs" ng-click="deleteHostnameOne(net._id)">Delete</button>
 										</div>
 										<div class="btn-group" ng-show="net.edit">	
-											<button class="btn btn-primary btn-xs" ng-click="saveHostnameOne(net._id, $index)">Save</button>
+											<button class="btn btn-primary btn-xs" ng-click="updateHostnameOne(net._id, $index)">Save</button>
 											<button class="btn btn-primary btn-xs" ng-click="cancelEditHostnameMode(net._id, $index)">Cancel</button>
 										</div>
 								</td>

@@ -52,18 +52,19 @@ var Network = function () {
 
 	self.delete = function (req, res){
 		var id = req.params.networkId;
+		console.log(id);
 		networkModel.delete(id, function(err, doc){
 			if(err instanceof Error){
 				res.send(200, {result: false});
 			} else {
-				res.send(200, {result: true, id: doc._id});
+				res.send(200, {result: true, delete: true});
 			}
 		});
 	};
 
 	self.updateHost = function (req, res){
-		var hostId = req.params.hostId
-		networkModel.updateHost(hostId, req.body, function(err, result){
+		var hostnameId = req.params.hostnameId;
+		networkModel.updateHost(hostnameId, req.body, function(err, result){
 			if(err instanceof Error){
 				res.send(200, {result: false});
 			} else {
@@ -74,7 +75,7 @@ var Network = function () {
 
 	self.updateNetwork = function (req, res){
 		var networkId = req.params.networkId;
-		networkModel.updateHost(networkId, req.body, function(err, result){
+		networkModel.updateNetwork(networkId, req.body, function(err, result){
 			if(err instanceof Error){
 				res.send(200, {result: false});
 			} else {
@@ -95,10 +96,10 @@ var Network = function () {
 		});
 	};
 
-	self.deleteHost = function (req, res) {
-		var hostId = req.params.hostId;
+	self.deleteHostname = function (req, res) {
+		var hostnameId = req.params.hostnameId;
 		var id = req.params.id;
-		networkModel.deleteHost(id, hostId, function(err, result){
+		networkModel.deleteHostname(id, hostnameId, function(err, result){
 			if(err instanceof Error){
 				res.send(200, {result: false});	
 			} else {

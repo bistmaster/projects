@@ -12,9 +12,10 @@ module.exports = function(app) {
 	app.post('/api/v1/network', networkRoutes.create);
 	app.get('/api/v1/network', networkRoutes.reads);
 	app.get('/api/v1/network/:networkId', networkRoutes.read);
-	app.put('/api/v1/network/network/:networkId', networkRoutes.updateNetwork);
-	app.put('/api/v1/network/hostname/:networkId', networkRoutes.updateHost);
-	app.delete('/api/v1/network/network/:id/:networkId', networkRoutes.deleteNetwork);
-	app.delete('/api/v1/network/hostname/:id/:networkId', networkRoutes.deleteNetwork);
-	app.delete('/api/v1/network/:networkId', networkRoutes.delete);
+	// app.put('/api/v1/network/network/:networkId', networkRoutes.updateNetwork);
+	app.put('/api/v1/network/:networkId/network', networkRoutes.updateNetwork);
+	app.put('/api/v1/network/:hostnameId/hostname', networkRoutes.updateHost);
+	app.get('/api/v1/network/:id/:networkId/networks/delete', networkRoutes.deleteNetwork);
+	app.get('/api/v1/network/:id/:hostnameId/hostnames/delete', networkRoutes.deleteHostname);
+	app.get('/api/v1/network/:networkId/delete', networkRoutes.delete);
 };
