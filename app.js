@@ -13,7 +13,7 @@ var allowCrossDomain = function (req, res, next){
 };
 
 app.configure(function() {
-	app.set('view engine', 'ejs'); 
+	app.set('view engine', 'ejs');
 	app.set('views', 'app/views');	
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());

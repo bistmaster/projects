@@ -1,4 +1,5 @@
-'use strict';
+/*jshint indent:4 */
+"use strict";
 
 var Network = function (mongoose) {
     var NetworkSchema = new mongoose.Schema({
@@ -64,7 +65,7 @@ var Network = function (mongoose) {
                 return cb(err, null);
             } else {
                 return cb(null, doc);
-            }           
+            }
         });
     };
 
@@ -76,28 +77,28 @@ var Network = function (mongoose) {
             } else {
                 console.log('deleted');
                 return cb(true);
-            }           
+            }
         });
     };
 
     self.updateNetwork = function (networkId, network, callback){
-        Network.update( { "networks._id":networkId }, 
-                        { 
-                            $set : {    
+        Network.update( { "networks._id":networkId },
+                        {
+                            $set : {
                                 "networks.$.nid": network.nid,
                                 "networks.$.n_name": network.n_name,
                                 "networks.$.n_ip": network.n_ip,
                                 "networks.$.n_status": network.n_status
                             }
-                        }, 
-                        {}, 
+                        },
+                        {},
                         function(err, numberAffected, raw){
-                            if(err) { 
+                            if(err) {
                                 return callback(err);
                             } else {
                                 return callback(null, numberAffected);
-                            }                       
-                        } );
+                            }
+                        });
     };
 
     self.updateHost= function (hostnameId, host, callback){
@@ -126,7 +127,7 @@ var Network = function (mongoose) {
             } else {
                 return callback(null, numberAffected);
             }
-        });        
+        });
     };
 
     self.deleteHostname = function (id, hostnameId, callback){
@@ -137,7 +138,7 @@ var Network = function (mongoose) {
                 return callback(null, numberAffected);
             }
         });
-    }  
+    };
 };
 
 exports.Network = Network;
